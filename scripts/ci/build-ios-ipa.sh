@@ -39,7 +39,7 @@ app="$repo_root/Mageki/Mageki.iOS/bin/iPhone/Release/Mageki.iOS.app"
 test -d "$app"
 executable="$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$app/Info.plist")"
 test -x "$app/$executable"
-lipo -verify_arch arm64 "$app/$executable"
+lipo "$app/$executable" -verify_arch arm64
 file "$app/$executable" | tee "$output/logs/executable.txt"
 staging="$(mktemp -d "${RUNNER_TEMP}/mageki-ipa.XXXXXX")"
 mkdir -p "$staging/Payload"
