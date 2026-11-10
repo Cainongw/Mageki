@@ -1,0 +1,63 @@
+name: Build iOS IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master, 'ci/ios-ipa']
+    paths:
+      - 'Mageki/Mageki/**'
+      - 'Mageki/Mageki.iOS/**'
+      - 'scripts/ci/**'
+      - '.github/workflows/ios-ipa.yml'
+  pull_request:
+    paths:
+      - 'Mageki/Mageki/**'
+      - 'Mageki/Mageki.iOS/**'
+      - 'scripts/ci/**'
+      - '.github/workflows/ios-ipa.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ios-ipa-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    # Xamarin's legacy compiler and Mono MDK require an Intel host.
+    runs-on: macos-15-intel
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up the .NET SDK compatible with Mono MSBuild
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '5.0.100'
+
+      - name: Install legacy Xamarin.iOS and Mono
+        run: bash scripts/ci/setup-xamarin-ios.sh
+
+      - name: Restore, compile ARM64 app and package unsigned IPA
+        run: bash scripts/ci/build-ios-ipa.sh
+
+      - name: Upload unsigned IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mageki-iOS-unsigned-${{ github.run_number }}
+          path: artifacts/*.ipa
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Upload build diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mageki-iOS-logs-${{ github.run_number }}
+          path: artifacts/logs/
+          if-no-files-found: ignore
+          retention-days: 7

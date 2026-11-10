@@ -16,6 +16,8 @@ Mageki能够通过USB或局域网连接到你设备中的中的 [ongeki-io](http
 - __不提供不想看wiki自己乱配的解决方式。__
 - __[蓝色的文字都可以点](https://github.com/Sanheiii/Mageki/wiki/Mageki%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)__。
 ## 开始使用
+使用 GitHub Actions 编译 iOS IPA：参见 [iOS 构建说明](docs/ios-build.md)。
+
 请前往 __[wiki页面](https://github.com/Sanheiii/Mageki/wiki/Mageki%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)__ 查看 __配置与连接说明__ 。
 - wiki非常详细，请耐心认真阅读配置方法和解决方案，如配置时发生问题，不妨放缓脚步重新来过试试，找不到东西？记得 __[点蓝字](https://github.com/Sanheiii/Mageki/wiki/Mageki%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)__。
 
