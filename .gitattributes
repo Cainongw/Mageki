@@ -3,6 +3,9 @@
 ###############################################################################
 * text=auto
 
+# CI scripts must also run correctly after a checkout on Windows.
+*.sh text eol=lf
+
 ###############################################################################
 # Set default behavior for command prompt diff.
 #
